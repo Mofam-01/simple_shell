@@ -8,19 +8,19 @@
  * (0) if info.argv[0] != "exit"
  */
 
-int_myexit(info_t *info)
+int _myexit(info_t *info)
 {
 	int exitcheck;
 
 	if (info->argv[1])/* if there is an exit arguement */
 	{
-		exitcheck = erratoi(info->argv[1]);
+		exitcheck = _erratoi(info->argv[1]);
 		if (exitcheck == -1)
 		{
 			info->status = 2;
-			print_erro(info, "Illegal number: ");
+			print_error(info, "Illegal number: ");
 			_eputs(info->argv[1]);
-			_eputschar('\n');
+			_eputchar('\n');
 			return (1);
 		}
 		info->err_num = _erratoi(info->argv[1]);
@@ -37,7 +37,7 @@ int_myexit(info_t *info)
  * Return: Always 0
  */
 
-int_mycd(info_t *info)
+int _mycd(info_t *info)
 {
 	char *s, *dir, buffer[1024];
 	int chdir_ret;
@@ -47,8 +47,8 @@ int_mycd(info_t *info)
 		_puts("TODO:>>getcwd failure emsg here<<\n");
 	if (!info->argv[1])
 	{
-		dir = _getenv(info, "HOME=")
-		if (!dir)
+		dir = _getenv(info, "HOME="); if
+		(!dir)
 			chdir_ret = /* TODO: what should this be? */
 				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
 		else
@@ -81,7 +81,7 @@ int_mycd(info_t *info)
  * Return: Always 0
  */
 
-int_myhelp(info_t *info)
+int _myhelp(info_t *info)
 {
 	char **arg_array;
 
