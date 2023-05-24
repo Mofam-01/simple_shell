@@ -1,18 +1,17 @@
 #include "shell.h"
 
 /**
- * _myexit - the shell exits
- * @info: Structure containing potential arguments. Used to maintaining
- * a constant function prototype.
- * Return: exits with a particular exit status
+ * _myexit - this exits the shell
+ * @info:the  Struct containing potential arguments. Used to maintain
+ * constant a function prototype.
+ * Return: this exits with a given exit status
  * (0) if info.argv[0] != "exit"
  */
-
 int _myexit(info_t *info)
 {
 	int exitcheck;
 
-	if (info->argv[1])/* if there is an exit arguement */
+	if (info->argv[1]) /* If there is an exit arguement */
 	{
 		exitcheck = _erratoi(info->argv[1]);
 		if (exitcheck == -1)
@@ -31,12 +30,11 @@ int _myexit(info_t *info)
 }
 
 /**
- * _mycd - the process of the current directory changes
- * @info: Structure that contain potential arguments. Used to maintain
- * a constant function prototype
- * Return: Always 0
+ * _mycd - this changes the current directory of the process
+ * @info: the Struct containing potential arguments. Used to maintain
+ * constant a function prototype.
+ * Return: 0 Always
  */
-
 int _mycd(info_t *info)
 {
 	char *s, *dir, buffer[1024];
@@ -44,11 +42,11 @@ int _mycd(info_t *info)
 
 	s = getcwd(buffer, 1024);
 	if (!s)
-		_puts("TODO:>>getcwd failure emsg here<<\n");
+		_puts("TODO: >>getcwd failure emsg here<<\n");
 	if (!info->argv[1])
 	{
-		dir = _getenv(info, "HOME="); if
-		(!dir)
+		dir = _getenv(info, "HOME=");
+		if (!dir)
 			chdir_ret = /* TODO: what should this be? */
 				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
 		else
@@ -67,6 +65,13 @@ int _mycd(info_t *info)
 			chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
 	}
 	else
+		chdir_ret = chdir(info->argv[1]);
+	if (chdir_ret == -1)
+	{
+		print_error(info, "can't cd to ");
+		_eputs(info->argv[1]), _eputchar('\n');
+	}
+	else
 	{
 		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
 		_setenv(info, "PWD", getcwd(buffer, 1024));
@@ -75,12 +80,11 @@ int _mycd(info_t *info)
 }
 
 /**
- * _myhelp - current directory of the process changes
- * @info: Structure contain potential arguments. Used to maintain
- * a constant function prototype.
- * Return: Always 0
+ * _myhelp - this changes the current directory of the process
+ * @info: the Struct containing potential arguments. Used to maintain
+ * constant a function prototype.
+ * Return: 0 Always
  */
-
 int _myhelp(info_t *info)
 {
 	char **arg_array;
